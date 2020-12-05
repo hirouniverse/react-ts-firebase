@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-function App() {
+import { AuthProvider } from './components/core/AuthProvider'
+
+import { SignOutButton } from './components/SignOutButton'
+import { PrivateRoute } from './components/core/PrivateRoute'
+import { PublicPage } from './views/PublicPage'
+import { ProtectedPage } from './views/ProtectedPage'
+import { SignInPage } from './views/SignInPage'
+
+export const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <Router>
+        <div>
+          <SignOutButton />
+
+          <ul>
+            <li>
+              <Link to="/public">Public Page</Link>
+            </li>
+            <li>
+              <Link to="/protected">Protected Page</Link>
+            </li>
+          </ul>
+
+          <Switch>
+            <Route path="/public">
+              <PublicPage />
+            </Route>
+            <Route path="/login">
+              <SignInPage />
+            </Route>
+            <PrivateRoute path="/protected">
+              <ProtectedPage />
+            </PrivateRoute>
+          </Switch>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
-
-export default App;
