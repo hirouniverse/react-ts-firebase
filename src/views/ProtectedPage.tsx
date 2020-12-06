@@ -14,7 +14,12 @@ export const ProtectedPage: FC = () => {
     <>
       <h3>Protected</h3>
 
-      {user && <SignOutButton />}
+      {user &&
+        <>
+          <SignOutButton />
+          <div>Welcome, { user.email }</div>
+        </>
+      }
 
       <h4>Links</h4>
       <ul>
