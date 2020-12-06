@@ -35,7 +35,7 @@ export const SignInPage: FC = () => {
       }
       
       signin(emailRef.current.value, passwordRef.current.value).then(() => {
-        history.replace('/')
+        history.replace(Routes.protected)
         return
       })
     } else {

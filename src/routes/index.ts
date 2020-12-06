@@ -1,5 +1,5 @@
 export const Routes = {
-  public: '/public',
+  home: '/',
   signin: '/signin',
   protected: '/protected'
 }

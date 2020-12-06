@@ -2,15 +2,13 @@ import React, { FC } from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 import { AuthProvider } from './hooks/useAuth'
 
-import { SignOutButton } from './components/SignOutButton'
 import { PrivateRoute } from './components/core/PrivateRoute'
-import { PublicPage } from './views/PublicPage'
+import { HomePage } from './views/HomePage'
 import { ProtectedPage } from './views/ProtectedPage'
 import { SignInPage } from './views/SignInPage'
 
@@ -21,20 +19,9 @@ export const App: FC = () => {
     <AuthProvider>
       <Router>
         <div>
-          <SignOutButton />
-
-          <ul>
-            <li>
-              <Link to={Routes.public}>Public Page</Link>
-            </li>
-            <li>
-              <Link to={Routes.protected}>Protected Page</Link>
-            </li>
-          </ul>
-
           <Switch>
-            <Route path={Routes.public}>
-              <PublicPage />
+            <Route exact path={Routes.home}>
+              <HomePage />
             </Route>
             <Route path={Routes.signin}>
               <SignInPage />
