@@ -3,6 +3,10 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 import { signin } from '../repository/Auth'
 
+import { useAuth } from '../hooks/useAuth'
+import { Routes } from '../routes'
+import { Redirect } from 'react-router-dom'
+
 interface LocationState {
   from: {
     pathname: string
@@ -17,6 +21,8 @@ export const SignInPage: FC = () => {
   const location = useLocation<LocationState>()
 
   let { from } = location.state || { from: { pathname: '/' }}
+
+  const { user } = useAuth();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,7 +43,15 @@ export const SignInPage: FC = () => {
     }
   }
 
-  return (
+  return user ? (
+    <>
+      <Redirect
+        to={{
+          pathname: Routes.protected
+        }}
+      />
+    </>
+  ) : (
     <div>
       <p>You must log in to view the page at {from.pathname}</p>
 
