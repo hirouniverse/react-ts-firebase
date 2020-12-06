@@ -1,6 +1,7 @@
 import { FC, useState, useEffect } from 'react'
 import { PlaceRepository } from '../repository/place'
 import { Place } from '../model/place'
+import { PlaceItem } from './Place'
 
 export const PlacesList: FC = () => {
   const [places, setPlaces] = useState<Place[]>([]);
@@ -19,12 +20,8 @@ export const PlacesList: FC = () => {
     <>
       {places.map(place => {
         return (
-          <div>            
-            <div>{ place.name }</div>
-            <div>{ place.address }</div>
-            <div>{ place.url }</div>
-          </div>
-          )
+          <PlaceItem place={ place } />  
+        )
       })}
     </>
   )
