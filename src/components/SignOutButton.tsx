@@ -2,6 +2,8 @@ import { FC } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
+import { Routes } from '../routes'
+
 export const SignOutButton: FC = () => {
   const history = useHistory();
   const { user, signout } = useAuth()
@@ -9,7 +11,7 @@ export const SignOutButton: FC = () => {
   function handleSignOut() {
     if (signout) {
       signout();
-      history.push("/login")
+      history.push(Routes.signin)
     }
   }
 
