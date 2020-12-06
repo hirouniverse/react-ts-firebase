@@ -4,12 +4,19 @@ import { useAuth } from '../hooks/useAuth'
 
 export const SignOutButton: FC = () => {
   const history = useHistory();
-  const { isAuthenticated, signout } = useAuth()
+  const { user, signout } = useAuth()
 
-  return isAuthenticated ? (
+  function handleSignOut() {
+    if (signout) {
+      signout();
+      history.push("/login")
+    }
+  }
+
+  return user ? (
     <div>
       Welcome!{ " " }
-      <button onClick={() => signout(() => history.push("/login"))}>Sign Out</button>
+      <button onClick={ () => handleSignOut() }>Sign Out</button>
     </div>
   ) : (
     <div>You are not signed in...</div>

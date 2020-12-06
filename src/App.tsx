@@ -6,7 +6,7 @@ import {
   Link
 } from "react-router-dom";
 
-import { AuthProvider } from './components/core/AuthProvider'
+import { AuthProvider } from './hooks/useAuth'
 
 import { SignOutButton } from './components/SignOutButton'
 import { PrivateRoute } from './components/core/PrivateRoute'

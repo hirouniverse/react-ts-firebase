@@ -3,13 +3,13 @@ import { RouteProps, Route, Redirect } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 
 export const PrivateRoute: FC<RouteProps> = ({ children, ...rest}) => {
-  const { isAuthenticated } = useAuth();
+  const { user } = useAuth();
 
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        isAuthenticated ? (
+        user ? (
           children
         ) : (
           <Redirect
