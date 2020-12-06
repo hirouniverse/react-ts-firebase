@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { Routes } from '../routes'
+import { PlacesList } from '../components/PlaceList'
 export const HomePage: FC = () => {
   return (
     <>
@@ -9,6 +10,7 @@ export const HomePage: FC = () => {
       <ul>
         <li><Link to={Routes.signin}>Go to Signin Page</Link></li>
       </ul>
+      <PlacesList />
     </>
   )
 }
