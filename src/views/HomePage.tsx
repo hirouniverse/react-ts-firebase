@@ -1,16 +1,10 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
-import { Routes } from '../routes'
-import { PlacesList } from '../components/PlaceList'
+import { Mapbox } from '../components/Mapbox'
+
 export const HomePage: FC = () => {
   return (
     <>
-      <h1>This is home page</h1>
-      <div>introduce your web site.</div>
-      <ul>
-        <li><Link to={Routes.signin}>Go to Signin Page</Link></li>
-      </ul>
-      <PlacesList />
+      <Mapbox />
     </>
   )
 }

@@ -4,7 +4,9 @@ export class Place {
     readonly documentId: string,
     readonly name: string,
     readonly address: string,
-    readonly url: string
+    readonly url: string,
+    readonly latitude: number,
+    readonly longitude: number
   ) {
     this.id = documentId;
   }
