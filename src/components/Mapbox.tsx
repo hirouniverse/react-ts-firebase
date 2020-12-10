@@ -1,13 +1,11 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import ReactMapGL from 'react-map-gl'
-
-import 'bootstrap/dist/css/bootstrap.min.css'
-import '../css/marker.css'
 
 import { BottomMenu } from './BottomMenu'
 import { CustomDrawer } from './Drawer'
 import { CustomMarkerList } from './CustomMarkerList'
 
+import { PlaceRepository } from '../repository/place'
 import { Place } from '../model/place'
 
 const mapStyle = {
@@ -30,26 +28,23 @@ export const Mapbox: FC = () => {
     zoom: 15
   })
 
+
   const [drawer, setDrawer] = useState<boolean>(false)
 
-  const [places, setPlaces] = useState<Place[]>([
-    new Place(
-      '1',
-      'Chidori - Coffee in Bed®',
-      '6 Đường Hoa Cau, Phường 7, Phú Nhuận, Thành phố Hồ Chí Minh, Vietnam',
-      '',
-      10.799536046331523,
-      106.68819652594003
-    ),
-    new Place(
-      '2',
-      'Chidori - Coffee in Bed®',
-      '25 Đ. Lam Sơn, Phường 2, Tân Bình, Thành phố Hồ Chí Minh, Vietnam',
-      '',
-      10.810086466046382,
-      106.66669192471376
-    )
-  ])
+  const [places, setPlaces] = useState<Place[]>([])
+
+
+  useEffect(() => {
+    (async () => {
+      const repo = new PlaceRepository()
+      const places = await repo.getAll()
+      if (places.length !== 0) {
+        setPlaces(places)
+      }
+    })()
+    return
+  }, [])
+
 
   const [selectedPlace, setSelectedPlace] = useState<Place | undefined>(undefined)
 

@@ -6,7 +6,7 @@ export class PlaceRepository extends FirestoreRepository {
   decode(snapshot: firebase.firestore.DocumentSnapshot | firebase.firestore.QueryDocumentSnapshot): Place | undefined {
     const data = snapshot.data()
     if (!data) return
-    return new Place(snapshot.id, data.name, data.address, data.url)
+    return new Place(snapshot.id, data.name, data.address, data.url, data.latitude, data.longitude)
   }
 
   async getAll(): Promise<Place[]> {
