@@ -15,6 +15,8 @@ import { SignUpPage } from './views/SignUpPage'
 
 import { Routes } from './routes'
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 export const App: FC = () => {
   return (
     <AuthProvider>
