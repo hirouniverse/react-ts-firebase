@@ -8,7 +8,6 @@ import { User, Me } from '../model/user'
 type TAuth = {
   loading: boolean
   user?: User
-  signout?: () => void
 }
 
 const convertUser = (user: firebase.User): User => {
