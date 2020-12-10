@@ -3,61 +3,71 @@ import firebase from 'firebase'
 
 import { auth } from '../lib/firebase'
 
+import { User, Me } from '../model/user'
+
 type TAuth = {
   loading: boolean
-  user?: firebase.User
+  user?: User
   signout?: () => void
+}
+
+const convertUser = (user: firebase.User): User => {
+  return new Me(user.uid)
 }
 
 const _useAuth = (): TAuth => {
 
-  const [loading, setLoading] = useState<boolean>(true);
-  const [user, setUser] = useState<firebase.User | undefined>(undefined)
-
-  function signout() {
-    auth.signOut().then(() => {
-      setUser(undefined)
-    })
-  }
+  const [authState, setAuth] = useState<TAuth>({ loading: true })
 
   useEffect(() => {
+    let cancel = false
+
     const unsubscribe = auth.onAuthStateChanged(
       async user => {
-        console.log('onAuthStateChange is called')
+        if (cancel) return
         if (user) {
-          setUser(user)
-          setLoading(false)
+          setAuth({ loading: false, user: convertUser(user)})
           return
         }
-        setLoading(false)
+
+        try {
+          const credential = await auth.signInAnonymously()
+          if (credential.user) {
+            setAuth({ loading: false, user: convertUser(credential.user) })
+            return
+          }
+          setAuth({ loading: false })
+        } catch(error) {
+          console.error(error)
+          setAuth({ loading: false })
+        }
       },
       error => {
+        if(cancel) return
         console.error(error)
-        setLoading(false)
+        setAuth({ loading: false })
       }
     );
-    return unsubscribe;
+    return () => {
+      cancel = true
+      unsubscribe()
+    }
   }, [])
 
-  return {
-    loading,
-    user,
-    signout
-  };
-}
-
-
-export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
-
-  const auth = _useAuth();
-
-  return (
-    <AuthContext.Provider value={ auth }>
-      { !auth.loading && children }
-    </AuthContext.Provider>
-  );
+  return authState
 }
 
 export const AuthContext = createContext<TAuth>({ loading: true });
 
-export const useAuth = () => useContext(AuthContext)
+export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
+  const state = _useAuth();
+  return (
+    <AuthContext.Provider value={ state }>
+      { !state.loading && children }
+    </AuthContext.Provider>
+  );
+}
+
+export const useAuth = () => {
+  return useContext(AuthContext)
+}
