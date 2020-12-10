@@ -21,8 +21,8 @@ const MarkerComp = styled.span<TProps>`
   justify-content:center;
   align-items:center;
   box-sizing:border-box;
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   color:#fff;
   background: #4D2D73;
   border:solid 2px;
@@ -32,6 +32,15 @@ const MarkerComp = styled.span<TProps>`
   transform-origin:0 0;
   transform: rotateZ(-135deg);
   background-color: ${props => props.backgroundColor};
+  &:after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    top: 50%;
+    left:50%;
+  }
 `
 
 export const CustomMarker: FC<IProps> = (props) => {
